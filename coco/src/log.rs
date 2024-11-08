@@ -22,7 +22,7 @@ pub fn info(msg: &str) {
 }
 
 pub fn debug(msg: &str) {
-    let style = Style::new().purple();
+    let style = Style::new().cyan().bold();
     log_message("DEBUG", style, msg);
 }
 
@@ -31,4 +31,16 @@ pub fn success(msg: &str) {
     log_message("SUCCESS", style, msg);
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_error() {
+        error("error")
+    }
 
+    #[test]
+    fn test_warn() {
+        warn("warn")
+    }
+}

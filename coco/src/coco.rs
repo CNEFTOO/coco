@@ -2,8 +2,8 @@ pub fn start() {}
 
 pub fn helper() {}
 
-pub run() {}
+pub fn run() {}
 
-pub load_poc(path: &str) -> String {
+pub fn load_poc(path: &str){
 }
 
