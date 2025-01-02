@@ -39,3 +39,18 @@ struct Detail {
     links: Vec<String>,
 }
 
+pub fn load_single_poc(path: &str) -> Pocs {
+    Pocs{
+        name: "".to_string(),
+        manual: false,
+        transport: "".to_string(),
+        set: Set { rand: "".to_string() },
+        rules: Default::default(),
+        expression: "".to_string(),
+        detail: Detail { author: "".to_string(), links: vec![] },
+    }
+}
+
+pub fn load_all(path: &str) -> Vec<Pocs> {
+    vec![load_single_poc(path)]
+}
