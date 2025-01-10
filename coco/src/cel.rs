@@ -1,5 +1,5 @@
 use cel_interpreter::{context::Context, Program};
-pub fn create_context() -> Context {
+pub fn create_context() -> Context<'static> {
     let context = Context::default();
 
     context

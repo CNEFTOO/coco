@@ -28,9 +28,9 @@ struct Request {
     cache: bool,
     method: String,
     path: String,
-    headers: HashMap<String, String>,
-    body: String,
-    follow_redirects: bool,
+    headers: Option<HashMap<String, String>>,
+    body: Option<String>,
+    follow_redirects: Option<bool>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -39,18 +39,27 @@ struct Detail {
     links: Vec<String>,
 }
 
-pub fn load_single_poc(path: &str) -> Pocs {
-    Pocs{
-        name: "".to_string(),
-        manual: false,
-        transport: "".to_string(),
-        set: Set { rand: "".to_string() },
-        rules: Default::default(),
-        expression: "".to_string(),
-        detail: Detail { author: "".to_string(), links: vec![] },
-    }
+fn load_poc_from_file(file_path: &str) -> Result<Pocs, String> {
+    let content = std::fs::read_to_string(file_path).map_err(|err| err.to_string())?;
+    let poc: Pocs = serde_yaml::from_str(&content).map_err(|err| err.to_string())?;
+    Ok(poc)
 }
 
-pub fn load_all(path: &str) -> Vec<Pocs> {
-    vec![load_single_poc(path)]
+// pub fn load_single_poc(path: &str) -> Pocs {
+//     load_poc_from_file(path).unwrap()
+// }
+//
+// pub fn load_all(path: &str) -> Vec<Pocs> {
+//     vec![load_single_poc(path)]
+// }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_load_single_poc() {
+        let result = load_poc_from_file("./pocs/demo.yml");
+        println!("{:#?}", result);
+    }
 }
